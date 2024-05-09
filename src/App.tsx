@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ImageSourcePropType, Image, Pressable} from 'react-native'
 import React, { PropsWithChildren, useState } from 'react'
+import {trigger} from 'react-native-haptic-feedback'
 
 import DiceOne from '../assets/One.png'
 import DiceTwo from '../assets/Two.png'
@@ -19,6 +20,12 @@ const Dice = ({imageUrl}: DiceProps) : JSX.Element => {
     </View>
   )
 }
+
+const options = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: false,
+};
+
 export default function App(): JSX.Element {
   const [diceImage, setDiceImage] = useState<ImageSourcePropType>(DiceOne)
   const rollDiceOnTap = () => {
@@ -46,6 +53,8 @@ export default function App(): JSX.Element {
         setDiceImage(DiceOne)
         break;
     }
+
+    trigger('impactLight', options)
   }
   return (
     <View style={styles.container}>
